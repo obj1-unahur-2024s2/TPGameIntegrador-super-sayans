@@ -1,18 +1,16 @@
 import wollok.game.*
 
-import example.pepita
+import flappywolbird.*
 
-program PepitaGame {
-	game.title("Pepita")
-	game.height(10)
-	game.width(10)
-
+program FlappyWolbird {
+	game.title("FLappy wolbird")
+	juego.configurar()
 	// add assets in asset folder, for example, for the background
   // game.boardGround("fondo2.jpg")
 
 	//
 
-	game.showAttributes(pepita) //Debug
+	//game.showAttributes(wolbird) //Debug
 
 	game.start()
 }

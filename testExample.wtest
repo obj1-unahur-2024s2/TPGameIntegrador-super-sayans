@@ -1,6 +1,6 @@
-import example.pepita
+import flappywolbird.*
 
-describe "group of tests for pepita" {
+describe "group of tests for wolbird" {
 
   test "pepita has initial energy" {
     assert.equals(100, pepita.energy())

@@ -1,10 +1,14 @@
-# Nombre del juego (<- borrar y completar)
+# Flappy wolbird 
 
-## Equipo de desarrollo
+## Equipo de desarrollo: super sayans
 
-- Alguien
-- Persona
-- etc.
+- PAGLIARI FRANCO, JEREMÍAS VALENTÍN
+- PEREYRA, FLORENCIA HAYDEE
+- DELGADILLO ESPINOZA, WALTER ARIEL
+- ROMAY, FAUSTO MAXIMILIANO
+- SPINELLI, MICAELA BELEN
+- OVEJERO, FERNANDO JULIO
+
 
 ## Capturas
 
