@@ -2,7 +2,7 @@ import wollok.game.*
 import teclado.*
 
 object juego{
-	const fondoJuego = new Fondo(img = "background.png")
+	const fondoJuego = new Fondo(img = "fondoflappy.png")
 
 	method configurar(){
 		game.width(10)
@@ -94,7 +94,7 @@ object bird {
 	var vive = false
 	var property position = game.at(5,5)
 	
-	method image() = "bird3.png"
+	method image() = "bird5.png"
 
 	
 	method saltar(){
