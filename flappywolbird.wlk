@@ -1,36 +1,28 @@
 import wollok.game.*
 import teclado.*
 
-object juego{
+object juego {
 	const fondoJuego = new Fondo(img = "fondoflappy.png")
 
-	method configurar(){
+	method configurar() {
 		game.width(10)
 		game.height(10)
 		game.cellSize(50)
 		self.iniciar()
-		// pipe.posicionar()
-		// game.addVisual(nivel1)
-		// game.addVisual(pipe)
-		// game.addVisual(bird)
-
-
 		teclado.configurar()
-		game.schedule(5000, {bird.caer()} )
 
-		game.onCollideDo(bird,{ obstaculo => obstaculo.chocar()})
+		game.onCollideDo(bird, { obstaculo => obstaculo.chocar() })
 	} 
 	
-	method iniciar(){
+	method iniciar() {
 		game.addVisual(fondoJuego)
 		pipe.posicionar()
 		game.addVisual(pipe)
-		//game.addVisual(bird)
 		bird.iniciar()
 		pipe.iniciar()
 	}
 
-	method gameOver(){
+	method gameOver() {
 		bird.muere()
 		game.removeTickEvent("caida")
 		game.removeVisual(bird)
@@ -38,90 +30,86 @@ object juego{
 		game.addVisual(gameOverText)
 	}
 	
-	method jugar(){
+	method jugar() {
 		if (bird.estaVivo()) 
 			bird.saltar()
 		else {
 			self.iniciar()
 		}
 	}
-	
 }
 
-object gameOverText{
+object gameOverText {
 	var property position = game.center()
 
 	method image() = "gameOver.png"
 }
 
-class Fondo{
+class Fondo {
 	const img
 	var property position = game.origin()
 
 	method image() = img
 }
 
-
 object pipe {
-
 	var position = null
 
 	method image() = "pipe.png"
 	method position() = position
 	
 	method posicionar() {
-		position = game.at(game.width()-1,game.height())
+		position = game.at(game.width() - 1, game.height())
 	}
 
-	method iniciar(){
+	method iniciar() {
 		self.posicionar()
 	}
 	
-	method mover(){
+	method mover() {
 		position = position.left(1)
 		if (position.x() == -1)
 			self.posicionar()
 	}
 	
-	method chocar(){
-		//juego.gameOver()
+	method chocar() {
+		// juego.gameOver()
 	}
 }
 
-
-
 object bird {
 	var vive = false
-	var property position = game.at(5,5)
+	var property position = game.at(5, 5)
 	
 	method image() = "bird5.png"
 
-	
-	method saltar(){
-		if (position.y() < game.height()-1){ 
+	method saltar() {
+		if (position.y() < game.height() - 1) { 
 			position = position.up(1)
 		}
 	}
 	
 	method iniciar() {
 		vive = true
-		game.addVisual(bird)
+		game.addVisual(self)
+		self.caer()  // Iniciar la gravedad de inmediato
 	}
+
 	method estaVivo() {
 		return vive
 	}
 
-	method muere(){
+	method muere() {
 		vive = false
 	}
 
-	method caer(){
-		game.onTick(1000, "caida",{
-			position = position.down(1)
-			if (self.position().y() < 0){
-				juego.gameOver() //Evalúa la condición de derrota cada 1s
+	method caer() {
+		game.onTick(500, "caida", {  // Gravedad constante con intervalo ajustado
+			if (vive and position.y() > 0) {
+				position = position.down(1)
+			} else if (position.y() <= 0) {
+				juego.gameOver()
 			}
 		})
-
 	}
 }

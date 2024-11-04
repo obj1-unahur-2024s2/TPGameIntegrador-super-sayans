@@ -5,12 +5,5 @@ import flappywolbird.*
 program FlappyWolbird {
 	game.title("FLappy wolbird")
 	juego.configurar()
-	// add assets in asset folder, for example, for the background
-  // game.boardGround("fondo2.jpg")
-
-	//
-
-	//game.showAttributes(wolbird) //Debug
-
 	game.start()
 }
