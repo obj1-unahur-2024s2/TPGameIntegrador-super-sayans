@@ -11,15 +11,15 @@ object juego {
 		self.iniciar()
 		teclado.configurar()
 
-		game.onCollideDo(bird, { obstaculo => obstaculo.chocar() })
+		game.onCollideDo(bird, { pipe => pipe.chocar() })
 	} 
 	
 	method iniciar() {
 		game.addVisual(fondoJuego)
-		pipe.posicionar()
 		game.addVisual(pipe)
-		bird.iniciar()
 		pipe.iniciar()
+		bird.iniciar()
+
 	}
 
 	method gameOver() {
@@ -53,27 +53,26 @@ class Fondo {
 }
 
 object pipe {
-	var position = null
+	var position = game.at(5, 10)
 
 	method image() = "pipe.png"
 	method position() = position
 	
 	method posicionar() {
-		position = game.at(game.width() - 1, game.height())
+		position = game.at(5, 1.randomUpTo(10))
 	}
 
 	method iniciar() {
 		self.posicionar()
+		self.mover()
 	}
 	
 	method mover() {
-		position = position.left(1)
-		if (position.x() == -1)
-			self.posicionar()
+		game.onTick(200, "mover", {position.left(1)})
 	}
 	
 	method chocar() {
-		// juego.gameOver()
+		 juego.gameOver()
 	}
 }
 
