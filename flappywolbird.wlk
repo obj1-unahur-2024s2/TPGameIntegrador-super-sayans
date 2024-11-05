@@ -26,6 +26,7 @@ object juego {
 		bird.muere()
 		game.removeTickEvent("caida")
 		game.removeVisual(bird)
+		game.removeVisual(pipe)
 		game.removeVisual(fondoJuego)
 		game.addVisual(gameOverText)
 	}
@@ -53,7 +54,7 @@ class Fondo {
 }
 
 object pipe {
-	var position = game.at(5, 10)
+	var position = game.at(5, 2)
 
 	method image() = "pipe.png"
 	method position() = position
