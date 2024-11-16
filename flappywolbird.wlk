@@ -53,28 +53,70 @@ class Fondo {
 	method image() = img
 }
 
+
+//object pipe {
+//	var position = game.at(5, 2)
+//
+//	method image() = "pipe.png"
+//	method position() = position
+//	
+//	method posicionar() {
+//		position = game.at(5, 1.randomUpTo(10))
+//	}
+//
+//	method iniciar() {
+//		self.posicionar()
+//		self.mover()
+//	}
+//	
+//	method mover() {
+//		game.onTick(200, "mover", {position.left(1)})
+//	}
+//	
+//	method chocar() {
+//		 juego.gameOver()
+//	}
+//}
 object pipe {
-	var position = game.at(5, 2)
+    var position = game.at(game.width() - 1, 3) 
+    const abertura = 2  // Tamaño del espacio entre los tubos 
 
-	method image() = "pipe.png"
-	method position() = position
-	
-	method posicionar() {
-		position = game.at(5, 1.randomUpTo(10))
-	}
+    method image() = "pipe.png"  
+    method position() = position
 
-	method iniciar() {
-		self.posicionar()
-		self.mover()
-	}
-	
-	method mover() {
-		game.onTick(200, "mover", {position.left(1)})
-	}
-	
-	method chocar() {
-		 juego.gameOver()
-	}
+    // Generar nueva posición y recalcular altura de los tubos
+    method posicionar() {
+        var alturaRandom = 2.randomUpTo(game.height() - abertura - 1)
+        position = game.at(game.width() - 1, alturaRandom)
+    }
+
+
+    method iniciar() {
+        self.posicionar()  
+        self.mover()       
+    }
+
+    
+    method mover() {
+        game.onTick(500, "moverTubo", {
+            position = position.left(1)  
+
+            if (position.x() < 0) {  
+                self.posicionar()   
+            }
+        })
+    }
+
+    method chocar() {
+        juego.gameOver()
+    }
+
+    // Devuelve las áreas ocupadas por los tubos
+    method areasOcupadas() {
+        var tuboSuperior = (0..position.y() - 1).map(y => game.at(position.x(), y))
+        var tuboInferior = (position.y() + abertura + 1..game.height() - 1).map(y => game.at(position.x(), y))
+        return tuboSuperior.concat(tuboInferior)
+    }
 }
 
 object bird {
