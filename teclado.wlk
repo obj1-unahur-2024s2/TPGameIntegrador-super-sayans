@@ -3,6 +3,7 @@ import flappywolbird.*
 
 object teclado{
     method configurar(){
-        keyboard.space().onPressDo({juego.jugar()})
+        keyboard.enter().onPressDo({juego.jugar()})
+        keyboard.space().onPressDo({juego.saltar()})
     }
 }
