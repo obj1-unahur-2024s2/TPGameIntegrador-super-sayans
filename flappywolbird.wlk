@@ -22,6 +22,7 @@ object juego {
 		game.addVisual(flappybird)
 		flappybird.iniciar()
 		game.addVisual(contadorRecord) // Añade el contador al juego
+		game.addVisual(tiempoRecord)
 		contadorRecord.reiniciarRecord() // Reinicia el cronómetro
 		contadorRecord.comenzarCronometro()
 	}
@@ -36,9 +37,11 @@ object juego {
 
 	method gameOver() {
 		flappybird.muere()
+		contadorRecord.detenerCronometro()
 		game.removeTickEvent("caida")
 		game.removeVisual(flappybird) 
 		game.removeVisual(contadorRecord)//añadi esto para que vuelva a aparecer el contador cuando reinicia el juego, porque sino no aparecía.
+		game.removeVisual(tiempoRecord)
 		flappybird.position(game.at(5, 5))
 		fondoJuego = new Fondo(img = "gameOver.gif") 
 		game.addVisual(fondoJuego)
@@ -156,16 +159,16 @@ object contadorRecord {
 		}
 	}
 
-	method detenerCronometro() {
+ 	method detenerCronometro() {
 		if (recordActual > tiempoRecord.tiempo()){
 			tiempoRecord.actualizar()
 		}
 		contando = false
 		game.removeTickEvent("incrementarRecord")
-	}
+	} 
 }
 
-object tiempoRecord {
+ object tiempoRecord { //es casi lo mismo que contador record pero no cuenta, solo guarda el mejor tiempo.
 	var property tiempo = 0 
 	const imagen = "record.png" 
 	var property position = game.at(9, 9) 
@@ -191,4 +194,4 @@ object tiempoRecord {
 
 
 
-}
+} 
