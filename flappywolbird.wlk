@@ -38,6 +38,7 @@ object juego {
 		flappybird.muere()
 		game.removeTickEvent("caida")
 		game.removeVisual(flappybird) 
+		game.removeVisual(contadorRecord)//añadi esto para que vuelva a aparecer el contador cuando reinicia el juego, porque sino no aparecía.
 		flappybird.position(game.at(5, 5))
 		fondoJuego = new Fondo(img = "gameOver.gif") 
 		game.addVisual(fondoJuego)
@@ -120,15 +121,15 @@ object pipe {
 }
 
 object contadorRecord {
-	var recordActual = 0 // El tiempo récord en segundos
-	const imagen = "record.png" // Imagen que acompaña al contador
+	var property recordActual = 0 // El tiempo récord en segundos
+//	const imagen = "record.png" // Imagen que acompaña al contador
 	var property position = game.at(0, 9) // Posición fija en la esquina superior izquierda
 	var contando = false // Para evitar múltiples eventos de incremento
 
-	method image() = imagen
+//	method image() = imagen
 	method text() {
 		// Convierte el tiempo a formato mm:ss
-		const minutos = (recordActual / 60).truncate(0) // División entera (3.1416).truncate(0)
+		const minutos = (recordActual / 60).truncate(0) // División entera, le puse el comnando truncate que muestra la cantidad de decimales que le indiques y lo puse en 0.
 		const segundos = recordActual % 60
 		return self.format(minutos) + ":" + self.format(segundos)
 	}
@@ -156,7 +157,38 @@ object contadorRecord {
 	}
 
 	method detenerCronometro() {
+		if (recordActual > tiempoRecord.tiempo()){
+			tiempoRecord.actualizar()
+		}
 		contando = false
 		game.removeTickEvent("incrementarRecord")
 	}
+}
+
+object tiempoRecord {
+	var property tiempo = 0 
+	const imagen = "record.png" 
+	var property position = game.at(9, 9) 
+
+	method image() = imagen
+	method actualizar() {
+	  tiempo = contadorRecord.recordActual()
+	}
+	method text() {
+		// Convierte el tiempo a formato mm:ss
+		const minutos = (tiempo / 60).truncate(0) // División entera, le puse el comnando truncate que muestra la cantidad de decimales que le indiques y lo puse en 0.
+		const segundos = tiempo % 60
+		return self.format(minutos) + ":" + self.format(segundos)
+	}
+
+	method format(numero) {
+    	// Devuelve un número en formato de dos dígitos
+		if (numero < 10) {
+			return "0" + numero
+		}
+		return "" + numero
+	}
+
+
+
 }
