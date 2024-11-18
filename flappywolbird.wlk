@@ -128,7 +128,7 @@ object contadorRecord {
 	method image() = imagen
 	method text() {
 		// Convierte el tiempo a formato mm:ss
-		const minutos = recordActual / 60 // División entera
+		const minutos = (recordActual / 60).truncate(0) // División entera (3.1416).truncate(0)
 		const segundos = recordActual % 60
 		return self.format(minutos) + ":" + self.format(segundos)
 	}
