@@ -45,6 +45,7 @@ object juego {
 		flappybird.position(game.at(5, 5))
 		fondoJuego = new Fondo(img = "gameOver.gif") 
 		game.addVisual(fondoJuego)
+		sonidoGameOver.play()
 	}
 }
 
@@ -125,11 +126,10 @@ object pipe {
 
 object contadorRecord {
 	var property recordActual = 0 // El tiempo récord en segundos
-//	const imagen = "record.png" // Imagen que acompaña al contador
+	//	const imagen = "record.png" // Imagen que acompaña al contador
 	var property position = game.at(0, 9) // Posición fija en la esquina superior izquierda
 	var contando = false // Para evitar múltiples eventos de incremento
-
-//	method image() = imagen
+	//	method image() = imagen
 	method text() {
 		// Convierte el tiempo a formato mm:ss
 		const minutos = (recordActual / 60).truncate(0) // División entera, le puse el comnando truncate que muestra la cantidad de decimales que le indiques y lo puse en 0.
@@ -159,7 +159,7 @@ object contadorRecord {
 		}
 	}
 
- 	method detenerCronometro() {
+	method detenerCronometro() {
 		if (recordActual > tiempoRecord.tiempo()){
 			tiempoRecord.actualizar()
 		}
@@ -168,14 +168,14 @@ object contadorRecord {
 	} 
 }
 
- object tiempoRecord { //es casi lo mismo que contador record pero no cuenta, solo guarda el mejor tiempo.
+object tiempoRecord { //es casi lo mismo que contador record pero no cuenta, solo guarda el mejor tiempo.
 	var property tiempo = 0 
 	const imagen = "record.png" 
 	var property position = game.at(9, 9) 
 
 	method image() = imagen
 	method actualizar() {
-	  tiempo = contadorRecord.recordActual()
+		tiempo = contadorRecord.recordActual()
 	}
 	method text() {
 		// Convierte el tiempo a formato mm:ss
@@ -191,7 +191,16 @@ object contadorRecord {
 		}
 		return "" + numero
 	}
-
-
-
 } 
+
+object sonidoFlappy {
+	method play() {
+		game.sound("saltar.mp3").play()
+	}
+}
+
+object sonidoGameOver {
+	method play() {
+		game.sound("gameOver.mp3").play()
+	}
+}
