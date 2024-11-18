@@ -25,6 +25,10 @@ object juego {
 		game.addVisual(tiempoRecord)
 		contadorRecord.reiniciarRecord() // Reinicia el cronómetro
 		contadorRecord.comenzarCronometro()
+		
+		//Pipe:
+		pipe.posicionar()
+		game.addVisual(pipe)
 	}
 
 	method saltar() {
@@ -82,45 +86,6 @@ object flappybird {
 				juego.gameOver() 
 			}
 		})
-	}
-}
-
-object pipe {
-	var position = game.at(game.width() - 1, 3) 
-	const abertura = 2  // Tamaño del espacio entre los tubos 
-
-	method image() = "pipe.png"  
-	method position() = position
-
-	// Generar nueva posición y recalcular altura de los tubos
-	method posicionar() {
-		const alturaRandom = 2.randomUpTo(game.height() - abertura - 1)
-		position = game.at(game.width() - 1, alturaRandom)
-	}
-
-	method iniciar() {
-		self.posicionar()  
-		self.mover()       
-	}
-
-	method mover() {
-		game.onTick(500, "moverTubo", {
-			position = position.left(1)  
-			if (position.x() < 0) {  
-				self.posicionar()   
-			}
-		})
-	}
-
-	method chocar() {
-		juego.gameOver()
-	}
-
-	// Devuelve las áreas ocupadas por los tubos
-	method areasOcupadas() {
-		const tuboSuperior = (0..position.y() - 1).map({y => game.at(position.x(), y)})
-		const tuboInferior = (position.y() + abertura + 1..game.height() - 1).map({y => game.at(position.x(), y)})
-		return tuboSuperior.concat(tuboInferior)
 	}
 }
 
@@ -203,4 +168,34 @@ object sonidoGameOver {
 	method play() {
 		game.sound("gameOver.mp3").play()
 	}
+}
+
+const velocidad = 250
+object pipe {
+	var position = null
+	method image() = "pipe.png"
+	method position() = position
+
+	method posicionar() {
+		position = game.at(game.width() - 1, suelo.position().y())
+	}
+
+	method iniciar() {
+		self.posicionar()
+		game.onTick(velocidad, "moverPipe", {self.mover()})
+	}
+
+	method mover() {
+		position = position.left()
+		if (position.x() == -1) {
+			self.posicionar()
+		}
+	}
+
+	method chocar() {juego.gameOver()}
+	method detener() {game.removeTickEvent("moverPipe")}
+}
+
+object suelo {
+	method position() = game.origin().up(1)
 }
