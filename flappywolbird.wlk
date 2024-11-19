@@ -18,6 +18,7 @@ object juego {
 
 	method jugar() {
 		fondoJuego = new Fondo(img = "fondoflappy.png")
+		const pipe = new Pipe ()
 		game.addVisual(fondoJuego)
 		game.addVisual(flappybird)
 		flappybird.iniciar()
@@ -25,6 +26,10 @@ object juego {
 		game.addVisual(tiempoRecord)
 		contadorRecord.reiniciarRecord() // Reinicia el cronómetro
 		contadorRecord.comenzarCronometro()
+		game.addVisual(pipe)
+		pipe.iniciar()
+		self.generarNuevoTubo()
+		
 	}
 
 	method saltar() {
@@ -46,6 +51,14 @@ object juego {
 		fondoJuego = new Fondo(img = "gameOver.gif") 
 		game.addVisual(fondoJuego)
 		sonidoGameOver.play()
+	}
+
+	method generarNuevoTubo() {
+		game.onTick(2000, "nuevoTubo", {
+			const nuevoTubo = new Pipe()
+			game.addVisual(nuevoTubo)
+			nuevoTubo.iniciar()
+		})
 	}
 }
 
@@ -184,6 +197,23 @@ class Pajaro inherits Enemigo {
 	override method image() = "owl-preview.gif"
 }
 
-object pipe {
+class Pipe {
+	var property position = game.at(9, 0)
+	method image() =  "pipe.png"
+
+	method iniciar() {
+		self.desplazarse()
+	}
+
+	method desplazarse(){
+		game.onTick(400, "deplazamiento", {
+			position = position.left(1)
+			if (position <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
+
 
 }
