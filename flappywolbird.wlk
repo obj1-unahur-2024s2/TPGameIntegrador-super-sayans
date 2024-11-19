@@ -3,7 +3,9 @@ import teclado.*
 
 object juego {
 	var fondoJuego = new Fondo(img = "gif1.gif")
+	const pipe = new Pipe(
 
+	)
 	method configurar() {
 		game.width(10)
 		game.height(10)
@@ -18,7 +20,6 @@ object juego {
 
 	method jugar() {
 		fondoJuego = new Fondo(img = "fondoflappy.png")
-		const pipe = new Pipe ()
 		game.addVisual(fondoJuego)
 		game.addVisual(flappybird)
 		flappybird.iniciar()
@@ -33,8 +34,6 @@ object juego {
 		game.whenCollideDo(pipe, { colisionado =>
 			self.gameOver()
 		})
-
-		self.generarNuevoTubo()
 	}
 
 	method saltar() {
@@ -56,6 +55,8 @@ object juego {
 		fondoJuego = new Fondo(img = "gameOver.gif") 
 		game.addVisual(fondoJuego)
 		sonidoGameOver.play()
+		game.removeTickEvent("desplazamiento")
+		game.removeVisual(Pipe)
 	}
 
 	method generarNuevoTubo() {
