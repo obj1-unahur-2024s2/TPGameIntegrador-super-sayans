@@ -214,7 +214,7 @@ class Pipe {
 	method desplazarse(){
 		game.onTick(400, "deplazamiento", {
 			position = position.left(1)
-			if (position <= 0){
+			if (position.x() <= 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
