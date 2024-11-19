@@ -31,7 +31,7 @@ object juego {
 		pipe.iniciar()
 
 		//Colision...
-		game.whenCollideDo(pipe, { colisionado =>
+		game.onCollideDo(pipe, { colisionado =>
 			self.gameOver()
 		})
 	}
@@ -45,7 +45,7 @@ object juego {
 	}
 
 	method gameOver() {
-		flappybird.muere()
+ 		flappybird.muere()
 		contadorRecord.detenerCronometro()
 		game.removeTickEvent("caida")
 		game.removeVisual(flappybird) 
@@ -56,8 +56,8 @@ object juego {
 		game.addVisual(fondoJuego)
 		sonidoGameOver.play()
 		game.removeTickEvent("desplazamiento")
-		game.removeVisual(Pipe)
-	}
+		game.removeVisual(pipe)
+	} 
 
 	method generarNuevoTubo() {
 		game.onTick(2000, "nuevoTubo", {
