@@ -28,8 +28,13 @@ object juego {
 		contadorRecord.comenzarCronometro()
 		game.addVisual(pipe)
 		pipe.iniciar()
+
+		//Colision...
+		game.whenCollideDo(pipe, { colisionado =>
+			self.gameOver()
+		})
+
 		self.generarNuevoTubo()
-		
 	}
 
 	method saltar() {
