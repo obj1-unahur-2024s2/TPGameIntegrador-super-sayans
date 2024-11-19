@@ -6,5 +6,3 @@ program FlappyWolbird {
 	juego.configurar()
 	game.start()
 }
-
-//

@@ -25,10 +25,6 @@ object juego {
 		game.addVisual(tiempoRecord)
 		contadorRecord.reiniciarRecord() // Reinicia el cronómetro
 		contadorRecord.comenzarCronometro()
-		
-		//Pipe:
-		pipe.posicionar()
-		game.addVisual(pipe)
 	}
 
 	method saltar() {
@@ -170,32 +166,24 @@ object sonidoGameOver {
 	}
 }
 
-const velocidad = 250
-object pipe {
-	var position = null
-	method image() = "pipe.png"
-	method position() = position
-
-	method posicionar() {
-		position = game.at(game.width() - 1, suelo.position().y())
-	}
-
-	method iniciar() {
-		self.posicionar()
-		game.onTick(velocidad, "moverPipe", {self.mover()})
-	}
-
-	method mover() {
-		position = position.left()
-		if (position.x() == -1) {
-			self.posicionar()
-		}
-	}
-
-	method chocar() {juego.gameOver()}
-	method detener() {game.removeTickEvent("moverPipe")}
-}
-
 object suelo {
 	method position() = game.origin().up(1)
+}
+
+//OBSTACULOS A COLOCAR!!!!!!
+class Enemigo {
+	method image()
+}
+
+class Aguila inherits Enemigo {
+	override method image() = "attack.gif"
+	
+}
+
+class Pajaro inherits Enemigo {
+	override method image() = "owl-preview.gif"
+}
+
+object pipe {
+
 }
