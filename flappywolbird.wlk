@@ -3,7 +3,7 @@ import teclado.*
 
 object juego {
 	var fondoJuego = new Fondo(img = "gif1.gif")
-	const pipe = new Pipe(
+	const property pipe = new Pipe(
 
 	)
 	method configurar() {
@@ -27,11 +27,10 @@ object juego {
 		game.addVisual(tiempoRecord)
 		contadorRecord.reiniciarRecord() // Reinicia el cronómetro
 		contadorRecord.comenzarCronometro()
-		game.addVisual(pipe)
-		pipe.iniciar()
-
-		game.onCollideDo(flappybird, {obstaculo => obstaculo.colision()})
 		self.generarNuevoTubo()
+		self.generarNuevoPajaro()
+		self.generarNuevoPajaroRojo()
+		game.onCollideDo(flappybird, {obstaculo => self.gameOver()})
 	}
 
 	method saltar() {
@@ -55,7 +54,8 @@ object juego {
 		sonidoGameOver.play()
 		game.removeTickEvent("desplazamiento")
 		game.removeTickEvent("nuevoTubo")
-		game.removeVisual(pipe)
+		game.removeTickEvent("nuevoPajaro")
+		game.removeTickEvent("nuevoPajaroRojo")
 	} 
 
 	method generarNuevoTubo() {
@@ -63,8 +63,27 @@ object juego {
 		const nuevoTubo = new Pipe()
 		game.addVisual(nuevoTubo)
 		nuevoTubo.iniciar()
+		game.whenCollideDo(flappybird, {self.gameOver()})
 	})
 }
+
+	method generarNuevoPajaro() {
+		game.onTick(4000, "nuevoPajaro", {
+			const nuevoPajaro = new Pajaro()
+			game.addVisual(nuevoPajaro)
+			nuevoPajaro.iniciar()
+			game.whenCollideDo(flappybird, {self.gameOver()})
+		})
+	}
+
+	method generarNuevoPajaroRojo() {
+		game.onTick(4000, "nuevoPajaroRojo", {
+			const nuevoPajaroRojo = new PajaroRojo()
+			game.addVisual(nuevoPajaroRojo)
+			nuevoPajaroRojo.iniciar()
+			game.whenCollideDo(flappybird, {self.gameOver()})
+		})
+	}
 }
 
 class Fondo {
@@ -188,17 +207,20 @@ object suelo {
 	method position() = game.origin().up(1)
 }
 
+class Obstaculo {
+	method image()
+	method colision() {juego.gameOver()}
+	method iniciar() {self.desplazarse()}
+	method desplazarse()
+}
+
 //OBSTACULOS A COLOCAR!!!!!
-class Pipe {
+class Pipe inherits Obstaculo {
 	var property position = game.at(9, 0)
-	method image() =  "pipe.png"
-
-	method iniciar() {
-		self.desplazarse()
-	}
-
-	method desplazarse(){
-		game.onTick(400, "deplazamiento", {
+	override method image() =  "pipe4.png"
+	method posicionar() {position = game.at(9,0)}
+	override method desplazarse(){
+		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
 			if (position.x() <= 0){
 				game.removeVisual(self)
@@ -206,6 +228,34 @@ class Pipe {
 			}
 		})
 	}
+}
 
-	method colision() {juego.gameOver()}
+class Pajaro inherits Obstaculo {
+	var property position = game.at(9,7)
+	override method image() = "attack.gif"
+	method posicionar() {position = game.at(9,5)}
+	override method desplazarse(){
+		game.onTick(300, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
+}
+
+class PajaroRojo inherits Obstaculo {
+	var property position = game.at(9,8)
+	override method image() = "owl-preview.gif"
+	method posicionar() {position = game.at(9,8)}
+	override method desplazarse(){
+		game.onTick(300, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
 }
