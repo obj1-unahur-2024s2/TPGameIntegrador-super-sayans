@@ -233,7 +233,7 @@ class Pipe inherits Obstaculo {
 class Pajaro inherits Obstaculo {
 	var property position = game.at(9,7)
 	override method image() = "attack.gif"
-	method posicionar() {position = game.at(9,5)}
+	method posicionar() {position = game.at(9,3.randomUpTo(9))}
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
@@ -246,7 +246,7 @@ class Pajaro inherits Obstaculo {
 }
 
 class PajaroRojo inherits Obstaculo {
-	var property position = game.at(9,8)
+	var property position = game.at(9,3.randomUpTo(9))
 	override method image() = "owl-preview.gif"
 	method posicionar() {position = game.at(9,8)}
 	override method desplazarse(){
