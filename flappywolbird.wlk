@@ -30,10 +30,8 @@ object juego {
 		game.addVisual(pipe)
 		pipe.iniciar()
 
-		//Colision...
-		game.onCollideDo(pipe, { colisionado =>
-			self.gameOver()
-		})
+		game.onCollideDo(flappybird, {obstaculo => obstaculo.colision()})
+		self.generarNuevoTubo()
 	}
 
 	method saltar() {
@@ -45,7 +43,7 @@ object juego {
 	}
 
 	method gameOver() {
- 		flappybird.muere()
+		flappybird.muere()
 		contadorRecord.detenerCronometro()
 		game.removeTickEvent("caida")
 		game.removeVisual(flappybird) 
@@ -56,16 +54,17 @@ object juego {
 		game.addVisual(fondoJuego)
 		sonidoGameOver.play()
 		game.removeTickEvent("desplazamiento")
+		game.removeTickEvent("nuevoTubo")
 		game.removeVisual(pipe)
 	} 
 
 	method generarNuevoTubo() {
-		game.onTick(2000, "nuevoTubo", {
-			const nuevoTubo = new Pipe()
-			game.addVisual(nuevoTubo)
-			nuevoTubo.iniciar()
-		})
-	}
+	game.onTick(4000, "nuevoTubo", {
+		const nuevoTubo = new Pipe()
+		game.addVisual(nuevoTubo)
+		nuevoTubo.iniciar()
+	})
+}
 }
 
 class Fondo {
@@ -189,20 +188,7 @@ object suelo {
 	method position() = game.origin().up(1)
 }
 
-//OBSTACULOS A COLOCAR!!!!!!
-class Enemigo {
-	method image()
-}
-
-class Aguila inherits Enemigo {
-	override method image() = "attack.gif"
-	
-}
-
-class Pajaro inherits Enemigo {
-	override method image() = "owl-preview.gif"
-}
-
+//OBSTACULOS A COLOCAR!!!!!
 class Pipe {
 	var property position = game.at(9, 0)
 	method image() =  "pipe.png"
@@ -221,5 +207,5 @@ class Pipe {
 		})
 	}
 
-
+	method colision() {juego.gameOver()}
 }
