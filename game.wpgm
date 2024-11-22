@@ -1,0 +1,13 @@
+import wollok.game.*
+import configuracion.*
+
+program FlappyWolbird {
+	game.title("FLappy wolbird")
+	juego.configurar()
+	game.start()
+}
+
+//AGREGAR OBSTACULOS!!! DEJE ASSETS NUEVOS
+//MODIFICAR EL CRONOMETRO QUE ESTA FEO!!!
+//PONER LA MUSICA SOLO EN EL INICIO 
+//NO SE PQ PERO EL PAJARO CAE MUY RAPIDO AL PRINCIPIO
