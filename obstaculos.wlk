@@ -8,21 +8,6 @@ class Obstaculo {
 	method desplazarse()
 }
 
-class Pipe inherits Obstaculo {
-	var property position = game.at(9, 0)
-	override method image() =  "pipe4.png"
-	method posicionar() {position = game.at(9,0)}
-	override method desplazarse(){
-		game.onTick(300, "deplazamiento", {
-			position = position.left(1)
-			if (position.x() <= 0){
-				game.removeVisual(self)
-				game.removeTickEvent("desplazamiento")
-			}
-		})
-	}
-}
-
 class Pajaro inherits Obstaculo {
 	var property position = game.at(9,7)
 	override method image() = "attack.gif"
@@ -55,9 +40,31 @@ class PajaroRojo inherits Obstaculo {
 
 //Igual tenemos que agrandar los assets de los obstaculos pq son muy chicos (en otra copia por si acaso si es que los intentan agrandar)
 class Cangrejo inherits Obstaculo {
-    //Estaria bueno que solo aparezca en el suelo (creo que a el suelo hay que cambiarle la configuracion)
+    var property position = game.at(9,1)
+	override method image() = "crab-walk.gif"
+	method posicionar() {position = game.at(9,8)}
+	override method desplazarse(){
+		game.onTick(300, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
 }
 
 class Fantasma inherits Obstaculo {
-    //Este esta bueno
+    var property position = game.at(9,2.randomUpTo(9))
+	override method image() = "fantasma.gif"
+	method posicionar() {position = game.at(9,8)}
+	override method desplazarse(){
+		game.onTick(300, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
 }
