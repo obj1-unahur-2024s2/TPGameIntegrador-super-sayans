@@ -54,7 +54,25 @@ object juego {
     }
 
     method modoTurbo() {
-        //...
+        fondoJuego = new Fondo(img = "fondo2d.jpg")
+        game.addVisual(fondoJuego)
+        game.addVisual(flappybird)
+        flappybird.iniciar()
+
+        game.addVisual(contadorRecord)
+        game.addVisual(tiempoRecord)
+        contadorRecord.reiniciarRecord()
+        contadorRecord.comenzarCronometro()
+
+        self.generarNuevoPajaro()
+        self.generarNuevoPajaroRojoTurbo()
+        self.generarNuevoCangrejo()
+        self.generarNuevoFantasmaTurbo()
+        self.generarNuevoPajaroVioleta()
+        self.generarNuevoObstaculo()
+
+        game.onCollideDo(flappybird, {obstaculo => self.gameOver()})
+        musica.play()
     }
 
     method gameOver() {
@@ -76,6 +94,8 @@ object juego {
         game.removeTickEvent("nuevoPajaroRojo")
         game.removeTickEvent("nuevoCangrejo") 
         game.removeTickEvent("nuevoFantasma")
+        game.removeTickEvent("nuevoPajaroVioleta")
+        game.removeTickEvent("nuevoObstaculo")
     }
 
     method generarNuevoPajaro() {
@@ -110,6 +130,42 @@ object juego {
             const nuevoCangrejo = new Cangrejo()
             game.addVisual(nuevoCangrejo)
             nuevoCangrejo.iniciar()
+            game.whenCollideDo(flappybird, {self.gameOver()})
+        })
+    }
+
+    method generarNuevoPajaroVioleta() {
+        game.onTick(3000, "nuevoPajaroVioleta", {
+            const nuevoPajaroVioleta = new PajaroVioleta()
+            game.addVisual(nuevoPajaroVioleta)
+            nuevoPajaroVioleta.iniciar()
+            game.whenCollideDo(flappybird, {self.gameOver()})
+        })
+    }
+
+    method generarNuevoObstaculo() {
+        game.onTick(2500, "nuevoObstaculo", {
+            const nuevoObstaculo = new OtroObstaculo()
+            game.addVisual(nuevoObstaculo)
+            nuevoObstaculo.iniciar()
+            game.whenCollideDo(flappybird, {self.gameOver()})
+        })
+    }
+
+        method generarNuevoPajaroRojoTurbo() {
+        game.onTick(3500, "nuevoPajaroRojo", {
+            const nuevoPajaroRojo = new PajaroRojo()
+            game.addVisual(nuevoPajaroRojo)
+            nuevoPajaroRojo.iniciar()
+            game.whenCollideDo(flappybird, {self.gameOver()})
+        })
+    }
+
+    method generarNuevoFantasmaTurbo() {
+        game.onTick(3000, "nuevoFantasma", {
+            const nuevoFantasma = new Fantasma()
+            game.addVisual(nuevoFantasma)
+            nuevoFantasma.iniciar()
             game.whenCollideDo(flappybird, {self.gameOver()})
         })
     }

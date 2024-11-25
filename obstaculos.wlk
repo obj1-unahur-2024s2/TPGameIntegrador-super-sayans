@@ -9,9 +9,9 @@ class Obstaculo {
 }
 
 class Pajaro inherits Obstaculo {
-	var property position = game.at(9,7)
+	var property position = game.at(9,3.randomUpTo(9))
 	override method image() = "attack.gif"
-	method posicionar() {position = game.at(9,3.randomUpTo(9))}
+	method posicionar() {position = game.at(9,7)}
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
@@ -60,6 +60,38 @@ class Fantasma inherits Obstaculo {
 	method posicionar() {position = game.at(9,8)}
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
+}
+
+//nuevos obstaculos
+
+class PajaroVioleta inherits Obstaculo {
+	var property position = game.at(9,2.randomUpTo(10))
+	override method image() = "obstaculo.gif"
+	method posicionar() {position = game.at(9,5)}
+	override method desplazarse(){
+		game.onTick(250, "deplazamiento", {
+			position = position.left(1)
+			if (position.x() <= 0){
+				game.removeVisual(self)
+				game.removeTickEvent("desplazamiento")
+			}
+		})
+	}
+}
+
+class OtroObstaculo inherits Obstaculo {
+	var property position = game.at(9,1.randomUpTo(10))
+	override method image() = "obstaculo1.gif"
+	method posicionar() {position = game.at(9,6)}
+	override method desplazarse(){
+		game.onTick(250, "deplazamiento", {
 			position = position.left(1)
 			if (position.x() <= 0){
 				game.removeVisual(self)
