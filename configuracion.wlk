@@ -108,7 +108,7 @@ object juego {
     }
 
     method generarNuevoPajaroRojo() {
-        game.onTick(4000, "nuevoPajaroRojo", {
+        game.onTick(4800, "nuevoPajaroRojo", {
             const nuevoPajaroRojo = new PajaroRojo()
             game.addVisual(nuevoPajaroRojo)
             nuevoPajaroRojo.iniciar()
@@ -117,7 +117,7 @@ object juego {
     }
 
     method generarNuevoFantasma() {
-        game.onTick(4000, "nuevoFantasma", {
+        game.onTick(4500, "nuevoFantasma", {
             const nuevoFantasma = new Fantasma()
             game.addVisual(nuevoFantasma)
             nuevoFantasma.iniciar()
@@ -135,7 +135,7 @@ object juego {
     }
 
     method generarNuevoPajaroVioleta() {
-        game.onTick(3000, "nuevoPajaroVioleta", {
+        game.onTick(3500, "nuevoPajaroVioleta", {
             const nuevoPajaroVioleta = new PajaroVioleta()
             game.addVisual(nuevoPajaroVioleta)
             nuevoPajaroVioleta.iniciar()
@@ -144,7 +144,7 @@ object juego {
     }
 
     method generarNuevoObstaculo() {
-        game.onTick(2500, "nuevoObstaculo", {
+        game.onTick(2700, "nuevoObstaculo", {
             const nuevoObstaculo = new OtroObstaculo()
             game.addVisual(nuevoObstaculo)
             nuevoObstaculo.iniciar()
