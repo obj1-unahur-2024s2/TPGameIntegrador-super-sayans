@@ -21,7 +21,7 @@ object flappybird {
 	method muere() { vive = false }
 
 	method caer() {
-		game.onTick(700, "caida", {
+		game.onTick(600, "caida", {
 			if (vive and position.y() > 0) {
 				position = position.down(1) 
 			} else if (position.y() <= 0) {
