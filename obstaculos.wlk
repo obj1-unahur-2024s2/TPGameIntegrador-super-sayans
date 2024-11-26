@@ -15,7 +15,7 @@ class Pajaro inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() < 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
@@ -30,7 +30,7 @@ class PajaroRojo inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() <  0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
@@ -46,7 +46,7 @@ class Cangrejo inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() < 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
@@ -61,7 +61,7 @@ class Fantasma inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(300, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() < 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
@@ -78,7 +78,7 @@ class PajaroVioleta inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(250, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() < 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
@@ -93,7 +93,7 @@ class OtroObstaculo inherits Obstaculo {
 	override method desplazarse(){
 		game.onTick(250, "deplazamiento", {
 			position = position.left(1)
-			if (position.x() <= 0){
+			if (position.x() < 0){
 				game.removeVisual(self)
 				game.removeTickEvent("desplazamiento")
 			}
